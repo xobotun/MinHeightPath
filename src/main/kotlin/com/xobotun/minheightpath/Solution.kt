@@ -10,5 +10,7 @@ interface Solution {
     /**
      * Find the longest even path. Or if there is more than one, list them all for a bonus point.
      */
-    fun solve(mountainRange: Iterable<Int>): List<List<Int>>
+    fun solve(mountainRange: List<Int>): List<Path>
 }
+
+typealias Path = List<Int>

@@ -9,7 +9,8 @@ import kotlin.test.assertContentEquals
 
 class SolutionTest {
     private val pathfinders: List<KClass<out Solution>> = listOf(
-        FailingSolution::class
+        // FailingSolution::class,
+        OnePathHashSolution::class
     )
     private val testExamples = listOf(
         // Borderline cases
@@ -42,7 +43,7 @@ class SolutionTest {
             val actual = it.first.solve(it.second.input)
 
             try {
-                assertContentEquals(it.second.expected, actual)
+                assertContentEquals(it.second.expected, actual, "Expected: ${it.second.expected}. Actual: $actual")
             } catch (e: AssertionError) {
                 if (it.second.isNecessary) throw e
                 print("${it.second.number} has failed, but was not necessary")
@@ -54,7 +55,7 @@ class SolutionTest {
 private data class TestCase(
     val number: Int = nextTestNumber++,
     val input: List<Int>,
-    val expected: List<List<Int>>,
+    val expected: List<Path>,
     val isNecessary: Boolean = true,
 ) {
     companion object {
@@ -62,13 +63,13 @@ private data class TestCase(
 
         fun singular(
             input: List<Int>,
-            expected: List<Int>,
+            expected: Path,
             isNecessary: Boolean = true
         ) = TestCase(nextTestNumber++, input, listOf(expected), isNecessary)
 
         fun multiple(
             input: List<Int>,
-            expected: List<List<Int>>,
+            expected: List<Path>,
             isNecessary: Boolean = true
         ) = TestCase(nextTestNumber++, input, expected, isNecessary)
     }
