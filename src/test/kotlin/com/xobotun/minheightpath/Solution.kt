@@ -2,7 +2,6 @@ package com.xobotun.minheightpath
 
 import com.xobotun.minheightpath.TestCase.Companion.multiple
 import com.xobotun.minheightpath.TestCase.Companion.singular
-import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.DynamicTest
 import org.junit.jupiter.api.TestFactory
 import kotlin.reflect.KClass
@@ -30,15 +29,15 @@ class SolutionTest {
         singular(listOf(1, 1, 2, 3, 3, 3), listOf(2, 3, 3, 3)),
 
         // Some sequences of the same length
-        multiple(listOf(1, 1, 1, 2, 2, 2), listOf(listOf(1, 1, 1, 2), listOf(1, 2, 2, 2))),
-        multiple(listOf(1, 2, 3, 4, 5, 6), listOf(listOf(1, 2), listOf(2, 3), listOf(3, 4), listOf(4, 5), listOf(5, 6))),
+        multiple(listOf(1, 1, 1, 2, 2, 2), listOf(listOf(1, 1, 1, 2), listOf(1, 2, 2, 2)), false),
+        multiple(listOf(1, 2, 3, 4, 5, 6), listOf(listOf(1, 2), listOf(2, 3), listOf(3, 4), listOf(4, 5), listOf(5, 6)), false),
 
         // The original test
         singular(listOf(3, 4, 5, 6, 7, 7, 7, 6, 5, 5, 6), listOf(6, 7, 7, 7, 6)),
     )
 
     @TestFactory
-    fun runPathfinders() = pathfinders.map { it.construct() }.zip(testExamples).map {
+    fun runPathfinders() = pathfinders.map { it.construct() }.flatMap { pathfinder -> testExamples.map { pathfinder to it } }.map {
         DynamicTest.dynamicTest("[${it.first::class.simpleName}] #${it.second.number}: ${it.second.input} must yield ${it.second.expected.size} solutions: ${it.second.expected}. Necessary to pass: ${it.second.isNecessary}") {
             val actual = it.first.solve(it.second.input)
 
