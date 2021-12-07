@@ -13,6 +13,8 @@ repositories {
 }
 
 dependencies {
+    implementation("com.github.doyaaaaaken:kotlin-csv-jvm:1.2.0")
+
     testImplementation(kotlin("test"))
     testImplementation(kotlin("reflect"))
 }
