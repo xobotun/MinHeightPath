@@ -28,7 +28,10 @@ class OnePathLinearSolution: Solution {
                     // When entering a straight path from a deviated one, log it
                     if (mountainRange[i - 1] != mountainRange[i]) pathFlatStartIndex = i
                 }
-                mountainRange[pathStartIndex] + pathDeviation == mountainRange[i] -> { /* Do nothing, it's an almost straight path */ }
+                mountainRange[pathStartIndex] + pathDeviation == mountainRange[i] -> {
+                    // When entering a deviated path from a straight one, log it
+                    if (mountainRange[i - 1] != mountainRange[i]) pathDeviationStartIndex = i
+                }
                 mountainRange[pathStartIndex] != mountainRange[i] -> {
                     // Now, when we enter this branch, it means one of two things has happened:
                     //  • either we previously were on a flat sequence and entered a new slightly lowered or heightened sequence
