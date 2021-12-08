@@ -11,7 +11,7 @@ import com.github.doyaaaaaken.kotlincsv.dsl.csvReader
 class SolutionTest {
     private val pathfinders: List<KClass<out Solution>> = listOf(
         // FailingSolution::class,
-        OnePathHashSolution::class
+        AllPathsHashSolution::class
     )
     private val testExamples = listOf(
         // Borderline cases

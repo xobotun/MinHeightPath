@@ -1,10 +1,10 @@
 package com.xobotun.minheightpath
 
 /**
- * Pathfinder that returns only one longest path, whichever it thinks is suitable.
- * Fast and easy to write, yet takes O(n) of additional memory and O(n^2).
+ * Pathfinder that returns all longest paths.
+ * Fast and easy to write, yet takes O(n) of additional memory and has O(n^2) time complexity.
  */
-class OnePathHashSolution: Solution {
+class AllPathsHashSolution: Solution {
 
     override fun solve(mountainRange: List<Int>): List<Path> {
         val pathLengthMap: PathLengthMap = mutableMapOf()
