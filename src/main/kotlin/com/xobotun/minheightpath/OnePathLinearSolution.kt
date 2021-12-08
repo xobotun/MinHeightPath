@@ -14,13 +14,13 @@ class OnePathLinearSolution: Solution {
                                         // E.g. in the end, it will be here: 1112211[2]2111
         var pathDeviation = 0 // -1..+1. When goes out of range, pathStartIndex should be reset to pathDeviationStartIndex
 
-        var longestPathStartIndex = -1
-        var longestPathEndIndex = -1   // Inclusive
+        var longestPathStartIndex = 0
+        var longestPathEndIndex = -1   // Inclusive. Initialized to -1 for `getBestLength` to yield 0 on start
         val getBestLength = { longestPathEndIndex - longestPathStartIndex + 1 }
         val isLonger = {start: Int, end: Int -> end - start + 1 > getBestLength() }
 
         for (i in 1..mountainRange.size - 1) {
-            when {
+           when {
                 mountainRange[pathStartIndex] == mountainRange[i] -> { /* Do nothing, it's a straight path */ }
                 mountainRange[pathStartIndex] + pathDeviation == mountainRange[i] -> { /* Do nothing, it's an almost straight path */ }
                 mountainRange[pathStartIndex] != mountainRange[i] -> {
@@ -36,7 +36,7 @@ class OnePathLinearSolution: Solution {
                     //    E.g. 11112222[3]333
                     else {
                         // Check if it was the longest path
-                        if (isLonger(pathStartIndex, i)) {
+                        if (isLonger(pathStartIndex, i - 1)) {
                             longestPathStartIndex = pathStartIndex
                             longestPathEndIndex = i - 1
                         }
